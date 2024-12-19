@@ -1,0 +1,244 @@
+:root {
+  /* 1. 标题颜色 */
+  --color-h1: red;
+  --color-h2: orange;
+  --color-h3: green;
+  --color-h4: blue;
+  --color-h5: cyan;
+  --color-h6: purple;
+
+  /* 2. 带透明度的背景颜色用于 hover/active 背景 */
+  --color-h1-bg: rgba(255, 0, 0, 0.2);
+  --color-h2-bg: rgba(255, 165, 0, 0.2);
+  --color-h3-bg: rgba(0, 128, 0, 0.2);
+  --color-h4-bg: rgba(0, 0, 255, 0.2);
+  --color-h5-bg: rgba(0, 255, 255, 0.2);
+  --color-h6-bg: rgba(128, 0, 128, 0.2);
+
+  /* 3. 其他颜色变量 */
+  --sidebar-bg: #f8f8f8;
+  --sidebar-border: #ddd;
+  --link-color: #333;
+  --link-hover-color: #333; /* 可根据需要调整 */
+  --btn-bg: #333;
+  --btn-color: #fff;
+  --btn-hover-bg: #555;
+  --line-default: #666;
+  --resize-handle-bg: #ddd;
+  --resize-handle-hover-bg: #ccc;
+}
+
+/* 全局样式 */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+/* 侧边栏基础样式 */
+#sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100%;
+  background-color: var(--sidebar-bg);
+  border-right: 1px solid var(--sidebar-border);
+  overflow-y: auto;
+  transition: transform 0.3s ease, width 0.3s ease;
+  z-index: 9999;
+}
+
+body.sidebar-collapsed #sidebar {
+  transform: translateX(-100%);
+}
+
+/* 侧边栏内部内容区 */
+.sidebar-content {
+  padding: 10px;
+}
+
+/* 目录列表基础样式 */
+.sidebar-content nav ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+/* 缩进 */
+.sidebar-content nav li[data-level="1"] {
+  padding-left: 8px;
+}
+.sidebar-content nav li[data-level="2"],
+.sidebar-content nav li[data-level="3"],
+.sidebar-content nav li[data-level="4"],
+.sidebar-content nav li[data-level="5"],
+.sidebar-content nav li[data-level="6"] {
+  padding-left: 1em;
+}
+
+/* li 基础样式 */
+.sidebar-content nav li {
+  margin: 3px 0;
+  position: relative;
+}
+
+/* 链接样式 */
+.sidebar-content nav li > a {
+  display: block;
+  text-decoration: none;
+  color: var(--link-color);
+  font-size: 14px;
+  padding: 3px 0;
+  border-radius: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+/* 为 h1 标题加粗 */
+.sidebar-content nav li[data-level="1"] > a {
+  font-weight: bold;
+}
+
+/* 不同级别的 hover/active 背景色（半透明） */
+.sidebar-content nav li[data-level="1"] a:hover,
+.sidebar-content nav li[data-level="1"] a.active {
+  background-color: var(--color-h1-bg);
+}
+.sidebar-content nav li[data-level="2"] a:hover,
+.sidebar-content nav li[data-level="2"] a.active {
+  background-color: var(--color-h2-bg);
+}
+.sidebar-content nav li[data-level="3"] a:hover,
+.sidebar-content nav li[data-level="3"] a.active {
+  background-color: var(--color-h3-bg);
+}
+.sidebar-content nav li[data-level="4"] a:hover,
+.sidebar-content nav li[data-level="4"] a.active {
+  background-color: var(--color-h4-bg);
+}
+.sidebar-content nav li[data-level="5"] a:hover,
+.sidebar-content nav li[data-level="5"] a.active {
+  background-color: var(--color-h5-bg);
+}
+.sidebar-content nav li[data-level="6"] a:hover,
+.sidebar-content nav li[data-level="6"] a.active {
+  background-color: var(--color-h6-bg);
+}
+
+/* 当当前层级激活时，对该层级 ul 添加 .active-siblings */
+.sidebar-content nav ul.active-siblings > li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--line-default);
+}
+
+/* 各级 guide line 颜色 */
+.sidebar-content nav ul.active-siblings > li[data-level="1"]::before {
+  background: var(--color-h1);
+}
+.sidebar-content nav ul.active-siblings > li[data-level="2"]::before {
+  background: var(--color-h2);
+}
+.sidebar-content nav ul.active-siblings > li[data-level="3"]::before {
+  background: var(--color-h3);
+}
+.sidebar-content nav ul.active-siblings > li[data-level="4"]::before {
+  background: var(--color-h4);
+}
+.sidebar-content nav ul.active-siblings > li[data-level="5"]::before {
+  background: var(--color-h5);
+}
+.sidebar-content nav ul.active-siblings > li[data-level="6"]::before {
+  background: var(--color-h6);
+}
+
+/* 
+   为上级标题下划线颜色跟随当前 active 标题的颜色，
+   并设置为双下划线且加粗 
+*/
+
+/* child's level=2, parent=1, 用 color-h2 */
+.sidebar-content nav li.active-ancestor-l2[data-level="1"] > a {
+  text-decoration-line: underline;
+  text-decoration-style: double;
+  text-decoration-color: var(--color-h2);
+  text-decoration-thickness: 2px; /* 可根据需要调整 */
+}
+
+/* child's level=3, parent=2, 用 color-h3 */
+.sidebar-content nav li.active-ancestor-l3[data-level="2"] > a {
+  text-decoration-line: underline;
+  text-decoration-style: double;
+  text-decoration-color: var(--color-h3);
+  text-decoration-thickness: 2px;
+}
+
+/* child's level=4, parent=3, 用 color-h4 */
+.sidebar-content nav li.active-ancestor-l4[data-level="3"] > a {
+  text-decoration-line: underline;
+  text-decoration-style: double;
+  text-decoration-color: var(--color-h4);
+  text-decoration-thickness: 2px;
+}
+
+/* child's level=5, parent=4, 用 color-h5 */
+.sidebar-content nav li.active-ancestor-l5[data-level="4"] > a {
+  text-decoration-line: underline;
+  text-decoration-style: double;
+  text-decoration-color: var(--color-h5);
+  text-decoration-thickness: 2px;
+}
+
+/* child's level=6, parent=5, 用 color-h6 */
+.sidebar-content nav li.active-ancestor-l6[data-level="5"] > a {
+  text-decoration-line: underline;
+  text-decoration-style: double;
+  text-decoration-color: var(--color-h6);
+  text-decoration-thickness: 2px;
+}
+
+/* 切换按钮 */
+#sidebar-toggle-btn {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 10000;
+  background-color: var(--btn-bg);
+  color: var(--btn-color);
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background-color 0.3s ease;
+}
+#sidebar-toggle-btn:hover {
+  background-color: var(--btn-hover-bg);
+}
+
+/* 当侧边栏显示时，为不遮挡正文 */
+body:not(.sidebar-collapsed) {
+  padding-left: 250px;
+  transition: padding-left 0.3s ease;
+}
+
+/* 拖拽调整宽度的句柄样式 */
+#sidebar-resize-handle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 5px;
+  height: 100%;
+  cursor: col-resize;
+  background: var(--resize-handle-bg);
+  transition: background 0.3s ease;
+}
+#sidebar-resize-handle:hover {
+  background: var(--resize-handle-hover-bg);
+}
