@@ -1,0 +1,120 @@
+#!/bin/bash
+
+# Function to display usage guide
+usage() {
+  script_name=$(basename "$0")
+  echo "This script adds a CSS and JS file reference to the beginning of Markdown files."
+  echo
+  echo "Usage:"
+  echo "  $script_name [-h] [file1.md file2.md ...]"
+  echo
+  echo "Notes:"
+  echo "  - Files excluded by default (case insensitive):"
+  echo "      readme.md, license.md, licence.md"
+  echo "  - CSS file location: \$HOME/MarkdownSidebarTOC/sidebar.css"
+  echo "  - JS file location:  \$HOME/MarkdownSidebarTOC/sidebar.js"
+  echo
+  echo "Example:"
+  echo "  $script_name"
+  echo "    Processes all Markdown files in the current directory and its subdirectories."
+  echo
+  echo "  $script_name file1.md file2.md"
+  echo "    Processes only the specified Markdown files."
+  echo
+  exit 0
+}
+
+# Check if -h option is provided
+if [[ "$1" == "-h" ]]; then
+  usage
+fi
+
+# Check if no arguments are provided, process all files
+if [ "$#" -eq 0 ]; then
+  echo "No files specified. Processing all .md files in the current directory and subdirectories."
+
+  # Define excluded file patterns (case insensitive)
+  excluded_patterns="readme|license|licence"
+  
+  # Find excluded files first
+  excluded_files=$(find . -type f -name "*.md" -o -name "*.MD" | grep -iE "/($excluded_patterns)\.md$")
+  
+  # Find all Markdown files, excluding specific files
+  file_list=$(find . -type f -name "*.md" -o -name "*.MD" | grep -iEv "/($excluded_patterns)\.md$")
+  
+  if [ -n "$excluded_files" ]; then
+    echo "Excluding files:"
+    echo "$excluded_files" | sed 's/^\.\//  - /'
+  fi
+else
+  # If specific files are provided as arguments
+  file_list="$@"
+fi
+
+# CSS and JS absolute paths
+CSS_PATH="$HOME/MarkdownSidebarTOC/sidebar.css"
+JS_PATH="$HOME/MarkdownSidebarTOC/sidebar.js"
+
+# Function to calculate relative paths
+get_relative_path() {
+  target="$1"
+  base="$2"
+
+  target=$(cd "$(dirname "$target")" && pwd)/$(basename "$target")
+  base=$(cd "$base" && pwd)
+
+  common_part="$base"
+  backtrack=""
+
+  while [ "${target#"$common_part"}" = "$target" ]; do
+    common_part=$(dirname "$common_part")
+    backtrack="../$backtrack"
+  done
+
+  relative_path="$backtrack${target#"$common_part/"}"
+  echo "$relative_path"
+}
+
+# Process each Markdown file
+for md_file in $file_list; do
+  # Check if file exists
+  if [ ! -f "$md_file" ]; then
+    echo "File not found: $md_file"
+    continue
+  fi
+
+  # Get directory of the current file
+  md_dir=$(dirname "$md_file")
+
+  # Calculate relative paths for CSS and JS
+  rel_css_path=$(get_relative_path "$CSS_PATH" "$md_dir")
+  rel_js_path=$(get_relative_path "$JS_PATH" "$md_dir")
+
+  # Construct lines to insert
+  css_link="<link rel=\"stylesheet\" href=\"$rel_css_path\" />"
+  js_script="<script src=\"$rel_js_path\"></script>"
+
+  # Check if CSS and JS references already exist
+  css_exists=$(grep -l "<link.*href=\".*sidebar\.css\".*\/>" "$md_file" || true)
+  js_exists=$(grep -l "<script.*src=\".*sidebar\.js\".*></script>" "$md_file" || true)
+
+  if [ -n "$css_exists" ] || [ -n "$js_exists" ]; then
+    # Replace existing references
+    temp_file=$(mktemp)
+    sed -E "s|<link.*href=\".*sidebar\.css\".*/>|$css_link|g" "$md_file" | \
+    sed -E "s|<script.*src=\".*sidebar\.js\".*></script>|$js_script|g" > "$temp_file"
+    mv "$temp_file" "$md_file"
+    echo "Updated existing references in: $md_file"
+  else
+    # Insert new references at the beginning of the file
+    temp_file=$(mktemp)
+    {
+      echo "$css_link"
+      echo "$js_script"
+      echo "" # Add empty line
+      cat "$md_file"
+    } >"$temp_file"
+    mv "$temp_file" "$md_file"
+    echo "Added new references to: $md_file"
+  fi
+done
