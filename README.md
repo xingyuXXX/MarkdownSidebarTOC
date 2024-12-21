@@ -1,9 +1,12 @@
 # Markdown Sidebar TOC
 
+<div align="center">
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![GitHub last commit](https://img.shields.io/github/last-commit/xingyuXXX/MarkdownSidebarTOC)](https://github.com/xingyuXXX/MarkdownSidebarTOC/commits/main)
-[![GitHub stars](https://img.shields.io/github/stars/xingyuXXX/MarkdownSidebarTOC)](https://github.com/xingyuXXX/MarkdownSidebarTOC/stargazers)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://makeapullrequest.com)
+
+</div>
 
 ---
 
