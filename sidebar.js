@@ -24,6 +24,21 @@ document.addEventListener("DOMContentLoaded", function () {
     toggleBtn.textContent = "TOC";
     document.body.appendChild(toggleBtn);
 
+    // 防止滚动传播
+    sidebarContent.addEventListener('wheel', (e) => {
+      const scrollTop = sidebarContent.scrollTop;
+      const scrollHeight = sidebarContent.scrollHeight;
+      const height = sidebarContent.clientHeight;
+      
+      // 当滚动到顶部或底部时阻止事件传播
+      if (
+        (scrollTop <= 0 && e.deltaY < 0) || 
+        (scrollTop + height >= scrollHeight && e.deltaY > 0)
+      ) {
+        e.preventDefault();
+      }
+    }, { passive: false });
+
     return { tocContainer, toggleBtn, sidebar, resizeHandle };
   }
 
