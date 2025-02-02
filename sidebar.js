@@ -131,7 +131,6 @@ document.addEventListener("DOMContentLoaded", function () {
    */
   function highlightCurrentHeading() {
     const scrollPos = window.scrollY + 10;
-    // console.log("current scroll pos", window.scrollY);
 
     let current = null;
     updateHeadingPositions();
@@ -151,7 +150,6 @@ document.addEventListener("DOMContentLoaded", function () {
     allUls.forEach((ul) => ul.classList.remove("active-siblings"));
 
     // 移除所有.active-ancestor-lX类
-    // 假设最大到h6，如需支持更多可继续添加
     allLis.forEach((li) => {
       li.classList.remove("active-ancestor-l1", "active-ancestor-l2", "active-ancestor-l3", "active-ancestor-l4", "active-ancestor-l5", "active-ancestor-l6");
     });
@@ -177,6 +175,32 @@ document.addEventListener("DOMContentLoaded", function () {
           if (parentLi && parentLi.tagName.toLowerCase() === "li") {
             // 对应childLevel的ancestor类，例如h3标题时添加active-ancestor-l3到父级h2的li
             parentLi.classList.add("active-ancestor-l" + childLevel);
+          }
+        }
+
+        // 尝试将当前active链接滚动到视图中间
+        const sidebarContent = document.querySelector(".sidebar-content");
+        if (sidebarContent) {
+          const linkRect = currentLink.getBoundingClientRect();
+          const sidebarRect = sidebarContent.getBoundingClientRect();
+
+          // 定义中间区域范围（视口高度的40%-60%）
+          const middleZoneStart = sidebarRect.height * 0.4;
+          const middleZoneEnd = sidebarRect.height * 0.6;
+
+          // 计算链接相对于侧边栏的位置
+          const linkRelativeTop = linkRect.top - sidebarRect.top;
+
+          // 只有当链接不在中间区域时才滚动
+          if (linkRelativeTop < middleZoneStart || linkRelativeTop > middleZoneEnd) {
+            // 计算目标滚动位置（让链接位于中间）
+            const targetScroll = sidebarContent.scrollTop + (linkRelativeTop - sidebarRect.height / 2);
+
+            // 使用平滑滚动效果
+            sidebarContent.scrollTo({
+              top: targetScroll,
+              behavior: "smooth",
+            });
           }
         }
       }
