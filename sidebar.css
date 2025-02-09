@@ -241,3 +241,44 @@ body:not(.sidebar-collapsed) {
 #sidebar-resize-handle:hover {
   background: var(--resize-handle-hover-bg);
 }
+
+/* 标题等级指示栏容器 */
+.heading-level-indicator {
+  display: flex;
+  align-items: center;
+  margin: 8px 12px;
+  padding: 3px 0;
+  gap: 4px;
+}
+
+/* 指示线段 */
+.level-line {
+  height: 3px;
+  flex: 1;
+  border-radius: 1.5px;
+}
+
+/* 各级标题对应的颜色 */
+.level-line[data-level="1"] {
+  background: var(--color-h1);
+}
+
+.level-line[data-level="2"] {
+  background: var(--color-h2);
+}
+
+.level-line[data-level="3"] {
+  background: var(--color-h3);
+}
+
+.level-line[data-level="4"] {
+  background: var(--color-h4);
+}
+
+.level-line[data-level="5"] {
+  background: var(--color-h5);
+}
+
+.level-line[data-level="6"] {
+  background: var(--color-h6);
+}

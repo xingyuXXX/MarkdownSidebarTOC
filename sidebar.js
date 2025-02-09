@@ -7,8 +7,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const sidebarContent = document.createElement("div");
     sidebarContent.className = "sidebar-content";
 
+    // Create heading level indicator
+    const levelIndicator = document.createElement("div");
+    levelIndicator.className = "heading-level-indicator";
+
     const tocContainer = document.createElement("nav");
     tocContainer.id = "sidebar-toc";
+
+    // Add indicator to sidebar content
+    sidebarContent.appendChild(levelIndicator);
     sidebarContent.appendChild(tocContainer);
 
     const resizeHandle = document.createElement("div");
@@ -125,6 +132,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const toc = buildTOC(headings);
   tocContainer.appendChild(toc);
+  updateLevelIndicator(headings);
 
   // 记录每个标题的位置
   let headingPositions = [];
@@ -280,5 +288,30 @@ document.addEventListener("DOMContentLoaded", function () {
     isResizing = false;
     document.removeEventListener("mousemove", handleMouseMove);
     document.removeEventListener("mouseup", handleMouseUp);
+  }
+
+  function updateLevelIndicator(headings) {
+    const levelIndicator = document.querySelector('.heading-level-indicator');
+    if (!levelIndicator) return;
+    
+    // Clear existing indicators
+    levelIndicator.innerHTML = '';
+    
+    // Get unique heading levels
+    const levels = new Set();
+    headings.forEach(h => {
+      const level = parseInt(h.tagName.substring(1), 10);
+      levels.add(level);
+    });
+    
+    // Create indicator lines in order
+    Array.from(levels)
+      .sort((a, b) => a - b)
+      .forEach(level => {
+        const line = document.createElement('div');
+        line.className = 'level-line';
+        line.setAttribute('data-level', level);
+        levelIndicator.appendChild(line);
+      });
   }
 });
