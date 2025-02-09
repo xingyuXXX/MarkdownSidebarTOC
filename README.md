@@ -12,6 +12,15 @@
 
 My skills are limited; contributions and improvement PRs are warmly welcomed!
 
+## Demo
+
+<table>
+  <tr>
+    <td><img src="./Snipaste_2025-02-09_13-45-15.png" alt="demo1" /></td>
+    <td><img src="./Snipaste_2025-02-09_13-45-55.png" alt="demo2" /></td>
+  </tr>
+</table>
+
 ## Usage
 
 1. clone this repo.
