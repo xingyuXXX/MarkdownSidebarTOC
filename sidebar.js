@@ -4,24 +4,26 @@ document.addEventListener("DOMContentLoaded", function () {
     const sidebar = document.createElement("div");
     sidebar.id = "sidebar";
 
-    const sidebarContent = document.createElement("div");
-    sidebarContent.className = "sidebar-content";
-
     // Create heading level indicator
     const levelIndicator = document.createElement("div");
     levelIndicator.className = "heading-level-indicator";
 
+    const sidebarContent = document.createElement("div");
+    sidebarContent.className = "sidebar-content";
+
     const tocContainer = document.createElement("nav");
     tocContainer.id = "sidebar-toc";
 
-    // Add indicator to sidebar content
-    sidebarContent.appendChild(levelIndicator);
+    // Add tocContainer to sidebarContent
     sidebarContent.appendChild(tocContainer);
+
+    // Add both levelIndicator and sidebarContent as siblings to sidebar
+    sidebar.appendChild(levelIndicator);
+    sidebar.appendChild(sidebarContent);
 
     const resizeHandle = document.createElement("div");
     resizeHandle.id = "sidebar-resize-handle";
 
-    sidebar.appendChild(sidebarContent);
     sidebar.appendChild(resizeHandle);
 
     document.body.appendChild(sidebar);
