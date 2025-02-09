@@ -57,7 +57,7 @@ body.sidebar-collapsed #sidebar {
 
 /* 侧边栏内部内容区 */
 .sidebar-content {
-  padding: 10px 5px 10px 10px;
+  padding: 5px 5px 5px 8px;
   height: 100%;
   overflow-y: auto;
   scrollbar-width: none; /* Firefox */
@@ -244,18 +244,23 @@ body:not(.sidebar-collapsed) {
 
 /* 标题等级指示栏容器 */
 .heading-level-indicator {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--sidebar-bg);
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  margin: 8px 12px;
-  padding: 3px 0;
-  gap: 4px;
+  margin: 0;
+  padding: 4px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* 指示线段 */
 .level-line {
   height: 3px;
-  flex: 1;
-  border-radius: 1.5px;
+  flex-grow: 1;
+  margin: 0 4px;
 }
 
 /* 各级标题对应的颜色 */
