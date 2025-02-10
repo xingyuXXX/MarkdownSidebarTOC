@@ -10,7 +10,9 @@
 
 ---
 
-My skills are limited; contributions and improvement PRs are warmly welcomed!
+Add a sidebar TOC to your HTML notes exported from markdown.
+
+> My skills are limited; contributions and improvement PRs are warmly welcomed!
 
 ## Demo
 
@@ -30,7 +32,5 @@ My skills are limited; contributions and improvement PRs are warmly welcomed!
    <link rel="stylesheet" href="<ralative_path_to>/sidebar.css" />
    <script src="<ralative_path_to>/sidebar.js"></script>
    ```
-
-   > `addtoc` script is now provided to add above lines to markdown file automatically.
 
 3. export markdown file to HTML.
