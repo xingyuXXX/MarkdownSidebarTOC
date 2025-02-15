@@ -10,6 +10,9 @@ body:not(.sidebar-collapsed) {
   padding-left: var(--sidebar-width);
   transition: padding-left 0.3s ease;
 }
+body.sidebar-collapsed #sidebar {
+  transform: translateX(-100%);
+}
 
 #sidebar {
   /* 1. 标题颜色 */
@@ -49,10 +52,6 @@ body:not(.sidebar-collapsed) {
   z-index: 9999;
 }
 
-body.sidebar-collapsed #sidebar {
-  transform: translateX(-100%);
-}
-
 .sidebar-content {
   height: 100%;
   overflow-y: auto;
@@ -60,32 +59,22 @@ body.sidebar-collapsed #sidebar {
   scrollbar-width: none; /* Firefox */
 }
 
-.sidebar-content::-webkit-scrollbar {
-  display: none;
-}
-
-/* 目录列表基础样式 */
+/* ------------------- TOC List ------------------- */
 .sidebar-content nav ul {
   list-style: none;
   padding-left: 0;
   margin: 0;
 }
-
-/* 缩进 */
 .sidebar-content nav li {
   margin: 1px 0;
   position: relative;
 }
-
 .sidebar-content nav li[data-level="1"] {
   padding-left: 1px;
 }
-
 .sidebar-content nav li[data-level]:not([data-level="1"]) {
   padding-left: 1em;
 }
-
-/* 链接基础样式 */
 .sidebar-content nav li > a {
   display: block;
   text-decoration: none;
@@ -98,12 +87,9 @@ body.sidebar-collapsed #sidebar {
   text-overflow: ellipsis;
   width: 100%;
 }
-
-/* h1 标题加粗 */
 .sidebar-content nav li[data-level="1"] > a {
   font-weight: bold;
 }
-
 /* hover/active 背景色 */
 .sidebar-content nav li[data-level] a:is(:hover, .active) {
   background-color: var(--color-h1-bg);
@@ -124,7 +110,7 @@ body.sidebar-collapsed #sidebar {
   background-color: var(--color-h6-bg);
 }
 
-/* ------------------- guide line ------------------- */
+/* ------------------- Active Siblings Guide Line ------------------- */
 .sidebar-content nav ul.active-siblings > li::before {
   content: "";
   position: absolute;
@@ -133,11 +119,9 @@ body.sidebar-collapsed #sidebar {
   bottom: 3px;
   width: 2px;
 }
-/* 为 h1 单独设置 left 位置 */
 .sidebar-content nav ul.active-siblings > li[data-level="1"]::before {
   left: -0.2em;
 }
-/* guide line 颜色 */
 .sidebar-content nav ul.active-siblings > li[data-level]::before {
   background: var(--color-h1);
 }
@@ -156,14 +140,14 @@ body.sidebar-collapsed #sidebar {
 .sidebar-content nav ul.active-siblings > li[data-level="6"]::before {
   background: var(--color-h6);
 }
-/* 上级标题下划线样式基础设置 */
+
+/* ------------------- Active Ancestor Underline ------------------- */
 .sidebar-content nav li[class*="active-ancestor"] > a {
   text-decoration-line: underline;
   text-decoration-style: double;
   text-decoration-thickness: 2px;
   text-underline-offset: 2px;
 }
-/* 各级标题下划线颜色 */
 .sidebar-content nav li.active-ancestor-l2[data-level="1"] > a {
   text-decoration-color: var(--color-h2);
 }
