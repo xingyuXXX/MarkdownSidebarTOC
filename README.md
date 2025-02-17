@@ -25,12 +25,11 @@ Add a sidebar TOC to your HTML notes exported from markdown.
 
 ## Usage
 
-1. clone this repo.
-2. add following to your markdown file:
+1. Add following to your markdown file:
 
    ```html
    <link rel="stylesheet" href="https://xingyuxxx.github.io/MarkdownSidebarTOC/sidebar.css" />
    <script src="https://xingyuxxx.github.io/MarkdownSidebarTOC/sidebar.js"></script>
    ```
 
-3. export markdown file to HTML.
+2. Export markdown file to HTML.
