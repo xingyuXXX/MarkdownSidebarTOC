@@ -3,11 +3,11 @@
   --btn-color: #fff;
   --btn-hover-bg: #555;
 
-  --sidebar-width: 250px;
+  --sidebar-width: 25rem;
 }
 
 body:not(.sidebar-collapsed) {
-  padding-left: var(--sidebar-width) + var(--padding-xy-box);
+  padding-left: calc(var(--sidebar-width) + var(--padding-xy-box));
   transition: padding-left 0.3s ease;
 }
 body.sidebar-collapsed #sidebar {
