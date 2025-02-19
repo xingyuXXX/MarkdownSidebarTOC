@@ -3,7 +3,7 @@
   --btn-color: #fff;
   --btn-hover-bg: #555;
 
-  --sidebar-width: 25rem;
+  --sidebar-width: 12rem;
 }
 
 body:not(.sidebar-collapsed) {
