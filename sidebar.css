@@ -7,7 +7,7 @@
 }
 
 body:not(.sidebar-collapsed) {
-  padding-left: var(--sidebar-width);
+  padding-left: var(--sidebar-width) + var(--padding-xy-box);
   transition: padding-left 0.3s ease;
 }
 body.sidebar-collapsed #sidebar {
