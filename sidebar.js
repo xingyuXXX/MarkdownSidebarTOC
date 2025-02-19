@@ -34,19 +34,20 @@ document.addEventListener("DOMContentLoaded", function () {
     document.body.appendChild(toggleBtn);
 
     // 防止滚动传播
-    sidebarContent.addEventListener('wheel', (e) => {
-      const scrollTop = sidebarContent.scrollTop;
-      const scrollHeight = sidebarContent.scrollHeight;
-      const height = sidebarContent.clientHeight;
-      
-      // 当滚动到顶部或底部时阻止事件传播
-      if (
-        (scrollTop <= 0 && e.deltaY < 0) || 
-        (scrollTop + height >= scrollHeight && e.deltaY > 0)
-      ) {
-        e.preventDefault();
-      }
-    }, { passive: false });
+    sidebarContent.addEventListener(
+      "wheel",
+      (e) => {
+        const scrollTop = sidebarContent.scrollTop;
+        const scrollHeight = sidebarContent.scrollHeight;
+        const height = sidebarContent.clientHeight;
+
+        // 当滚动到顶部或底部时阻止事件传播
+        if ((scrollTop <= 0 && e.deltaY < 0) || (scrollTop + height >= scrollHeight && e.deltaY > 0)) {
+          e.preventDefault();
+        }
+      },
+      { passive: false },
+    );
 
     return { tocContainer, toggleBtn, sidebar, resizeHandle };
   }
@@ -273,16 +274,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function handleMouseMove(e) {
     if (!isResizing) return;
-    let newWidth = startWidth + (e.clientX - startX);
-    // 限制最小宽度
-    if (newWidth < 150) {
-      newWidth = 150;
-    }
-    sidebar.style.width = newWidth + "px";
-    // 同步body的padding-left
-    if (!document.body.classList.contains("sidebar-collapsed")) {
-      document.body.style.paddingLeft = newWidth + "px";
-    }
+    
+    // 使用 requestAnimationFrame 优化性能
+    requestAnimationFrame(() => {
+      // 将鼠标移动的像素距离转换为 rem
+      const pixelsPerRem = parseFloat(getComputedStyle(document.documentElement).fontSize);
+      let newWidthRem = (startWidth + (e.clientX - startX)) / pixelsPerRem;
+      
+      // 限制最小宽度为 12rem (与 CSS 中的 --sidebar-width 默认值保持一致)
+      if (newWidthRem < 12) {
+        newWidthRem = 12;
+      }
+      
+      sidebar.style.width = newWidthRem + "rem";
+      // 同步 body 的 padding-left，加上 --padding-xy-box
+      if (!document.body.classList.contains("sidebar-collapsed")) {
+        document.body.style.paddingLeft = `calc(${newWidthRem}rem + var(--padding-xy-box))`;
+      }
+    });
   }
 
   function handleMouseUp(e) {
@@ -293,26 +302,26 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function updateLevelIndicator(headings) {
-    const levelIndicator = document.querySelector('.heading-level-indicator');
+    const levelIndicator = document.querySelector(".heading-level-indicator");
     if (!levelIndicator) return;
-    
+
     // Clear existing indicators
-    levelIndicator.innerHTML = '';
-    
+    levelIndicator.innerHTML = "";
+
     // Get unique heading levels
     const levels = new Set();
-    headings.forEach(h => {
+    headings.forEach((h) => {
       const level = parseInt(h.tagName.substring(1), 10);
       levels.add(level);
     });
-    
+
     // Create indicator lines in order
     Array.from(levels)
       .sort((a, b) => a - b)
-      .forEach(level => {
-        const line = document.createElement('div');
-        line.className = 'level-line';
-        line.setAttribute('data-level', level);
+      .forEach((level) => {
+        const line = document.createElement("div");
+        line.className = "level-line";
+        line.setAttribute("data-level", level);
         levelIndicator.appendChild(line);
       });
   }
