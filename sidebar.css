@@ -1,9 +1,20 @@
 :root {
-  --btn-bg: #333;
-  --btn-color: #fff;
-  --btn-hover-bg: #555;
-
   --sidebar-width: 12rem;
+}
+
+@media screen and (max-width: 768px) {
+  body:not(.sidebar-collapsed) {
+    padding-left: var(--padding-xy-box) !important;
+  }
+
+  #sidebar {
+    width: 80vw !important;
+    z-index: 10001;
+  }
+
+  #sidebar-resize-handle {
+    display: none;
+  }
 }
 
 body:not(.sidebar-collapsed) {
@@ -49,7 +60,7 @@ body.sidebar-collapsed #sidebar {
   transition:
     transform 0.3s linear,
     width 0.3s linear;
-  z-index: 9999;
+  /* z-index: 9999; */
 }
 
 .sidebar-content {
@@ -170,8 +181,8 @@ body.sidebar-collapsed #sidebar {
   top: 10px;
   right: 10px;
   z-index: 10000;
-  background-color: var(--btn-bg);
-  color: var(--btn-color);
+  background-color: #333;
+  color: #fff;
   border: none;
   padding: 8px 12px;
   cursor: pointer;
@@ -179,7 +190,7 @@ body.sidebar-collapsed #sidebar {
   transition: background-color 0.3s ease;
 }
 #sidebar-toggle-btn:hover {
-  background-color: var(--btn-hover-bg);
+  background-color: #555;
 }
 
 /* ------------------- Sidebar Resize Handle ------------------- */

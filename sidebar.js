@@ -52,6 +52,10 @@ document.addEventListener("DOMContentLoaded", function () {
     return { tocContainer, toggleBtn, sidebar, resizeHandle };
   }
 
+  function isMobileView() {
+    return window.matchMedia("(max-width: 768px)").matches;
+  }
+
   const { tocContainer, toggleBtn, sidebar, resizeHandle } = createSidebar();
 
   // 如果没有找到 #sidebar-toc 容器
@@ -239,6 +243,15 @@ document.addEventListener("DOMContentLoaded", function () {
   tocContainer.addEventListener("click", function (e) {
     if (e.target.tagName.toLowerCase() === "a") {
       highlightCurrentHeading();
+      if (isMobileView()) {
+        document.body.classList.add("sidebar-collapsed");
+      }
+    }
+  });
+
+  document.addEventListener("click", function (e) {
+    if (isMobileView() && !document.body.classList.contains("sidebar-collapsed") && !sidebar.contains(e.target) && e.target !== toggleBtn) {
+      document.body.classList.add("sidebar-collapsed");
     }
   });
 
@@ -273,19 +286,19 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   function handleMouseMove(e) {
-    if (!isResizing) return;
-    
+    if (!isResizing || isMobileView()) return;
+
     // 使用 requestAnimationFrame 优化性能
     requestAnimationFrame(() => {
       // 将鼠标移动的像素距离转换为 rem
       const pixelsPerRem = parseFloat(getComputedStyle(document.documentElement).fontSize);
       let newWidthRem = (startWidth + (e.clientX - startX)) / pixelsPerRem;
-      
+
       // 限制最小宽度为 12rem (与 CSS 中的 --sidebar-width 默认值保持一致)
       if (newWidthRem < 12) {
         newWidthRem = 12;
       }
-      
+
       sidebar.style.width = newWidthRem + "rem";
       // 同步 body 的 padding-left，加上 --padding-xy-box
       if (!document.body.classList.contains("sidebar-collapsed")) {
