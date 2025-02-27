@@ -210,9 +210,9 @@ body.sidebar-collapsed #sidebar {
 
 /* ------------------- Heading Level Indicator ------------------- */
 .heading-level-indicator {
-  position: sticky;
-  top: 0;
-  z-index: 1;
+  /* position: sticky; */
+  /* top: 0; */
+  /* z-index: 1; */
   background: var(--sidebar-bg);
   display: flex;
   justify-content: space-between;
