@@ -300,9 +300,9 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       sidebar.style.width = newWidthRem + "rem";
-      // 同步 body 的 padding-left，加上 --padding-xy-box
+      // 同步 body 的 padding-left，加上 --padding-box-xy
       if (!document.body.classList.contains("sidebar-collapsed")) {
-        document.body.style.paddingLeft = `calc(${newWidthRem}rem + var(--padding-xy-box))`;
+        document.body.style.paddingLeft = `calc(${newWidthRem}rem + var(--padding-box-xy))`;
       }
     });
   }

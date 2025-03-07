@@ -4,7 +4,7 @@
 
 @media screen and (max-width: 768px) {
   body:not(.sidebar-collapsed) {
-    padding-left: var(--padding-xy-box) !important;
+    padding-left: var(--padding-box-xy) !important;
   }
 
   #sidebar {
@@ -18,7 +18,7 @@
 }
 
 body:not(.sidebar-collapsed) {
-  padding-left: calc(var(--sidebar-width) + var(--padding-xy-box));
+  padding-left: calc(var(--sidebar-width) + var(--padding-box-xy));
   transition: padding-left 0.3s linear;
 }
 body.sidebar-collapsed #sidebar {
@@ -27,20 +27,20 @@ body.sidebar-collapsed #sidebar {
 
 #sidebar {
   /* 1. 标题颜色 */
-  --color-h1: red;
-  --color-h2: orange;
-  --color-h3: green;
-  --color-h4: blue;
-  --color-h5: cyan;
-  --color-h6: purple;
+  --color-h1: rgb(var(--color-header-h1, 255, 0, 0));
+  --color-h2: rgb(var(--color-header-h2, 255, 165, 0));
+  --color-h3: rgb(var(--color-header-h3, 0, 128, 0));
+  --color-h4: rgb(var(--color-header-h4, 0, 0, 255));
+  --color-h5: rgb(var(--color-header-h5, 0, 255, 255));
+  --color-h6: rgb(var(--color-header-h6, 128, 0, 128));
 
   /* 2. 带透明度的背景颜色用于 hover/active 背景 */
-  --color-h1-bg: rgba(255, 0, 0, 0.2);
-  --color-h2-bg: rgba(255, 165, 0, 0.2);
-  --color-h3-bg: rgba(0, 128, 0, 0.2);
-  --color-h4-bg: rgba(0, 0, 255, 0.2);
-  --color-h5-bg: rgba(0, 255, 255, 0.2);
-  --color-h6-bg: rgba(128, 0, 128, 0.2);
+  --color-h1-bg: rgba(var(--color-header-h1, 255, 0, 0), 0.2);
+  --color-h2-bg: rgba(var(--color-header-h2, 255, 165, 0), 0.2);
+  --color-h3-bg: rgba(var(--color-header-h3, 0, 128, 0), 0.2);
+  --color-h4-bg: rgba(var(--color-header-h4, 0, 0, 255), 0.2);
+  --color-h5-bg: rgba(var(--color-header-h5, 0, 255, 255), 0.2);
+  --color-h6-bg: rgba(var(--color-header-h6, 128, 0, 128), 0.2);
 
   /* 3. 其他颜色变量 */
   --sidebar-bg: #f8f8f8;
