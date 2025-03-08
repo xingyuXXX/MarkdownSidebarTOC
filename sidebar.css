@@ -43,7 +43,7 @@ body.sidebar-collapsed #sidebar {
   --color-h6-bg: rgba(var(--color-header-h6, 128, 0, 128), 0.2);
 
   /* 3. 其他颜色变量 */
-  --sidebar-bg: #f8f8f8;
+  --sidebar-bg: var(--color-sidebar-bg, #f8f8f8);
   --sidebar-border: #ddd;
   --link-color: #333;
 
