@@ -35,12 +35,12 @@ body.sidebar-collapsed #sidebar {
   --color-h6: rgb(var(--color-header-h6, 128, 0, 128));
 
   /* 2. 带透明度的背景颜色用于 hover/active 背景 */
-  --color-h1-bg: rgba(var(--color-header-h1, 255, 0, 0), 0.2);
-  --color-h2-bg: rgba(var(--color-header-h2, 255, 165, 0), 0.2);
-  --color-h3-bg: rgba(var(--color-header-h3, 0, 128, 0), 0.2);
-  --color-h4-bg: rgba(var(--color-header-h4, 0, 0, 255), 0.2);
-  --color-h5-bg: rgba(var(--color-header-h5, 0, 255, 255), 0.2);
-  --color-h6-bg: rgba(var(--color-header-h6, 128, 0, 128), 0.2);
+  --color-h1-bg: rgba(var(--color-header-h1, 255, 0, 0), 0.4);
+  --color-h2-bg: rgba(var(--color-header-h2, 255, 165, 0), 0.4);
+  --color-h3-bg: rgba(var(--color-header-h3, 0, 128, 0), 0.4);
+  --color-h4-bg: rgba(var(--color-header-h4, 0, 0, 255), 0.4);
+  --color-h5-bg: rgba(var(--color-header-h5, 0, 255, 255), 0.4);
+  --color-h6-bg: rgba(var(--color-header-h6, 128, 0, 128), 0.4);
 
   /* 3. 其他颜色变量 */
   --sidebar-bg: var(--color-sidebar-bg, #f8f8f8);
